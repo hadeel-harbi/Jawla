@@ -12,30 +12,34 @@ displayReservationsResponse(Request req) async {
     final supabase = SupabaseEnv().supabase;
 
     // get user Id from (users) table
-    final user = await supabase
+    final userId = (await supabase
         .from("users")
         .select("id")
-        .eq("id_auth", jwt.payload["sub"]);
-
-    final userId = user[0]["id"];
+        .eq("id_auth", jwt.payload["sub"]))[0]["id"];
 
     // get activity Id from (reservations) table
-    final activityId = (await supabase
+    final activitiesId = (await supabase
         .from("reservations")
         .select("activity_id")
-        .eq("user_id", userId))[0]["activity_id"];
+        .eq("user_id", userId));
 
-    // display activities from (activities) table
-    final activities = await supabase
-        .from("activities")
-        .select("activity_name")
-        .eq("activity_id", activityId);
+    print(activitiesId);
+    final activitiesList = [];
 
-    print(activities);
+    for (var element in activitiesId) {
+      final activity = (await supabase
+          .from("activities")
+          .select("activity_name")
+          .eq("id", element["activity_id"]))[0]["activity_name"];
+
+      print(activity);
+      activitiesList.add(activity);
+    }
+    print(activitiesList);
 
     return ResponseMsg().successResponse(
-      msg: "Your ractivities:",
-      data: jsonDecode(activities.toString()),
+      msg: "success",
+      data: {"Your activities:": activitiesList},
     );
   } catch (error) {
     return ResponseMsg().errorResponse(msg: error.toString());
