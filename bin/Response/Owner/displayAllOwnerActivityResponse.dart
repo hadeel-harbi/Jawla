@@ -18,11 +18,15 @@ displayAllActivityResponse(Request req) async {
         .select("id")
         .eq("id_auth", jwt.payload["sub"]))[0]["id"];
 
+    final owner_id = (await supabase
+        .from("owners")
+        .select("id")
+        .eq("user_id", userId))[0]["id"];
+
     final activitiesOwner = await supabase 
            .from("activities")
            .select()
-           .eq("owner_id" , userId);
-
+           .eq("owner_id" , owner_id);
 
     return ResponseMsg().successResponse(
       msg: "success",
