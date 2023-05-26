@@ -1,13 +1,9 @@
-
-import 'dart:convert';
-
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:shelf/shelf.dart';
-
 import '../../RespnseMsg/ResponseMsg.dart';
 import '../../Services/Supabase/supabaseEnv.dart';
 
-displayAllActivityResponse(Request req) async {
+deleteActivityResponse(Request req  , String id) async {
   try {
     
     final jwt = JWT.decode(req.headers["authorization"]!);
@@ -20,9 +16,10 @@ displayAllActivityResponse(Request req) async {
 
     final activitiesOwner = await supabase 
            .from("activities")
-           .select()
-           .eq("owner_id" , userId);
-
+           .delete()
+           .eq("owner_id" , userId)
+           .eq("id", id);
+    
 
     return ResponseMsg().successResponse(
       msg: "success",
