@@ -1,8 +1,6 @@
 import 'dart:convert';
-
 import 'package:shelf/shelf.dart';
 import 'package:supabase/supabase.dart';
-
 import '../../Models/UserModel.dart';
 import '../../RespnseMsg/ResponseMsg.dart';
 import '../../Services/Supabase/supabaseEnv.dart';
@@ -14,6 +12,7 @@ createAccountResponse(Request req) async {
     final supabase = SupabaseEnv().supabase;
 
     // create new user
+    
     UserResponse userInfo = await supabase.auth.admin.createUser(
       AdminUserAttributes(
         email: body['email'],
