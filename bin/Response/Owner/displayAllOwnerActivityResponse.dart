@@ -9,8 +9,7 @@ import '../../Services/Supabase/supabaseEnv.dart';
 
 getAllActivityResponse(Request req) async {
   try {
-
-
+    
     final jwt = JWT.decode(req.headers["authorization"]!);
     final supabase = SupabaseEnv().supabase;
     
