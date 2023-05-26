@@ -11,7 +11,7 @@ class OwnerRoute {
     final router = Router()
     ..post('/add_activity', addActivityResponse)
     ..get('/display_activities', displayAllActivityResponse)
-    ..get('/delete_activity_ById/<id>', deleteActivityResponse);
+    ..get('/delete_activity_ById/<id>', deleteActivityByIdResponse);
 
     final pipline =
         Pipeline().addMiddleware(checkTokenMiddleware()).addHandler(router);

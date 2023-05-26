@@ -3,7 +3,7 @@ import 'package:shelf/shelf.dart';
 import '../../RespnseMsg/ResponseMsg.dart';
 import '../../Services/Supabase/supabaseEnv.dart';
 
-deleteActivityResponse(Request req  , String id) async {
+deleteActivityByIdResponse(Request req  , String id) async {
   try {
     
     final jwt = JWT.decode(req.headers["authorization"]!);
@@ -14,16 +14,14 @@ deleteActivityResponse(Request req  , String id) async {
         .select("id")
         .eq("id_auth", jwt.payload["sub"]))[0]["id"];
 
-    final activitiesOwner = await supabase 
+   await supabase 
            .from("activities")
            .delete()
            .eq("owner_id" , userId)
            .eq("id", id);
-    
 
     return ResponseMsg().successResponse(
-      msg: "success",
-      data: {"Your activities:": activitiesOwner},
+      msg: "Deleted successfully",
     );
   } catch (error) {
     return ResponseMsg().errorResponse(msg: error.toString());
