@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:shelf/shelf.dart';
 
@@ -23,7 +21,6 @@ displayReservationsResponse(Request req) async {
         .select("activity_id")
         .eq("user_id", userId));
 
-    print(activitiesId);
     final activitiesList = [];
 
     for (var element in activitiesId) {
@@ -32,10 +29,8 @@ displayReservationsResponse(Request req) async {
           .select("activity_name")
           .eq("id", element["activity_id"]))[0]["activity_name"];
 
-      print(activity);
       activitiesList.add(activity);
     }
-    print(activitiesList);
 
     return ResponseMsg().successResponse(
       msg: "success",

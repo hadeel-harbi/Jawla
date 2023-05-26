@@ -8,20 +8,19 @@ addReservationResponse(Request req, String activityId) async {
   try {
     final jwt = JWT.decode(req.headers["authorization"]!);
     final supabase = SupabaseEnv().supabase;
+    final fromReservations = supabase.from("reservations");
 
     // get user Id from (users) table
-    final user = await supabase
+    final userId = (await supabase
         .from("users")
         .select("id")
-        .eq("id_auth", jwt.payload["sub"]);
-
-    final userId = user[0]["id"];
+        .eq("id_auth", jwt.payload["sub"]))[0]["id"];
 
     // get currnet date and time
     DateTime dateNow = DateTime.now();
 
     // insert new reservation
-    await supabase.from("reservations").insert({
+    await fromReservations.insert({
       "user_id": userId,
       "activity_id": int.parse(activityId),
       "reservation_time": dateNow.toString(),
@@ -34,12 +33,12 @@ addReservationResponse(Request req, String activityId) async {
         .select("owner_id")
         .eq("id", int.parse(activityId)))[0]["owner_id"];
 
-    final reserId = (await supabase.from("reservations").select("id").eq(
+    final reserId = (await fromReservations.select("id").eq(
           "activity_id",
           int.parse(activityId),
         ))[0]["id"];
 
-    //insert in activity_reservations table *****
+    //insert in (activity_reservations) table *****
     await supabase.from("activity_reservations").insert({
       "owner_id": ownerId,
       "reservation_id": reserId,

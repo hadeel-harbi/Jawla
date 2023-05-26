@@ -1,16 +1,11 @@
-import 'dart:convert';
-
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:shelf/shelf.dart';
-
 import '../../RespnseMsg/ResponseMsg.dart';
 import '../../Services/Supabase/supabaseEnv.dart';
 
-addActivityResponse(Request req) async {
+deleteActivityByIdResponse(Request req, String id) async {
   try {
-    final Map body = jsonDecode(await req.readAsString());
     final jwt = JWT.decode(req.headers["authorization"]!);
-
     final supabase = SupabaseEnv().supabase;
 
     final userId = (await supabase
@@ -23,12 +18,21 @@ addActivityResponse(Request req) async {
         .select("id")
         .eq("user_id", userId))[0]["id"];
 
-    await supabase.from("activities").insert({"owner_id": ownerId, ...body});
+    // delete from activivty-reservation
+    await supabase.from("activity_reservations").delete().eq("activity_id", id);
 
-// add images
-// add durations
+    // delete from reservations
+    await supabase.from("reservations").delete().eq("activity_id", id);
+
+    // delete activity
+    await supabase
+        .from("activities")
+        .delete()
+        .eq("owner_id", ownerId)
+        .eq("id", id);
+
     return ResponseMsg().successResponse(
-      msg: "add Activity success",
+      msg: "Deleted successfully",
     );
   } catch (error) {
     return ResponseMsg().errorResponse(msg: error.toString());

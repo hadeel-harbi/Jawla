@@ -4,7 +4,7 @@ import 'package:shelf/shelf.dart';
 import '../../RespnseMsg/ResponseMsg.dart';
 import '../../Services/Supabase/supabaseEnv.dart';
 
-deleteReservationsResponse(Request req, String reserId) async {
+deleteReservationResponse(Request req, String reserId) async {
   try {
     final jwt = JWT.decode(req.headers["authorization"]!);
     final supabase = SupabaseEnv().supabase;
