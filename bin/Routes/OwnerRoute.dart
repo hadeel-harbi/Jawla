@@ -5,7 +5,7 @@ import '../Middelwares/CheckOwnerMiddleware.dart';
 import '../Response/Owner/addActivityResponse.dart';
 import '../Response/Owner/deleteActivityResponse.dart';
 import '../Response/Owner/displayAllOwnerActivitiesResponse.dart';
-import '../Response/Owner/displayReservationsResponse.dart';
+import '../Response/Owner/displayActivityReservationsResponse.dart';
 
 class OwnerRoute {
   Handler get handler {

@@ -20,13 +20,13 @@ upgradeToOwnerResponse(Request req) async {
         .select("id")
         .eq("id_auth", jwt.payload["sub"]))[0]["id"];
 
-    // insert new owner (Owners) table
+    // insert new owner in (Owners) table
     await supabase.from("owners").insert({
       "business_license": body["business_license"],
       "user_id": userId,
     });
 
-    // change isOwner True
+    // change (isOwner) to True
     await fromUsers.update({"isOwner": true}).eq("id", userId);
 
     return ResponseMsg().successResponse(

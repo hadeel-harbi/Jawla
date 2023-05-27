@@ -1,30 +1,26 @@
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:shelf/shelf.dart';
+import '../../../RespnseMsg/ResponseMsg.dart';
+import '../../../Services/Supabase/supabaseEnv.dart';
 
-import '../../RespnseMsg/ResponseMsg.dart';
-import '../../Services/Supabase/supabaseEnv.dart';
-
-deleteReservationResponse(Request req, String reserId) async {
+deleteFavoriteActivityResponse(Request req, String activityId) async {
   try {
     final jwt = JWT.decode(req.headers["authorization"]!);
     final supabase = SupabaseEnv().supabase;
 
-    // get user Id from (users) table
     final userId = (await supabase
         .from("users")
         .select("id")
-        .eq("id_auth", jwt.payload["sub"]))[0]["id"];
+        .eq("id_auth", jwt.payload['sub']))[0]["id"];
 
-    final reserIdInt = int.parse(reserId);
-
-    // delete reservation from (reservations) table
+    // delete favorite from (favorites) table
     await supabase
-        .from("reservations")
+        .from("favorite")
         .delete()
-        .match({"id": reserIdInt, "user_id": userId});
+        .match({"user_id": userId, "activity_id": int.parse(activityId)});
 
     return ResponseMsg().successResponse(
-      msg: "Delete reservation",
+      msg: "Your favorite activity has been deleted",
     );
   } catch (error) {
     return ResponseMsg().errorResponse(msg: error.toString());

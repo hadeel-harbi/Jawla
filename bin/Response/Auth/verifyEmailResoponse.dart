@@ -17,6 +17,7 @@ verifyAccountResponse(Request req) async {
       );
     }
 
+    // verify otp
     await SupabaseEnv().supabase.auth.verifyOTP(
           token: body["otp"],
           type: OtpType.signup,

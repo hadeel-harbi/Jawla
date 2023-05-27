@@ -18,9 +18,6 @@ deleteActivityByIdResponse(Request req, String id) async {
         .select("id")
         .eq("user_id", userId))[0]["id"];
 
-    // delete from activivty-reservation
-    await supabase.from("activity_reservations").delete().eq("activity_id", id);
-
     // delete from reservations
     await supabase.from("reservations").delete().eq("activity_id", id);
 

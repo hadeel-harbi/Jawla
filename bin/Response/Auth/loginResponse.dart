@@ -21,11 +21,13 @@ loginResponse(Request req) async {
         .auth
         .signInWithPassword(email: body["email"], password: body["password"]);
 
+    final token = userLogin.session!.accessToken.toString();
+
     // ------ success
     return ResponseMsg().successResponse(
       msg: "Log in",
       data: {
-        "Token": userLogin.session!.accessToken.toString(),
+        "Token": token,
       },
     );
   } catch (error) {

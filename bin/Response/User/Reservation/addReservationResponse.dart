@@ -1,8 +1,8 @@
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:shelf/shelf.dart';
 
-import '../../RespnseMsg/ResponseMsg.dart';
-import '../../Services/Supabase/supabaseEnv.dart';
+import '../../../RespnseMsg/ResponseMsg.dart';
+import '../../../Services/Supabase/supabaseEnv.dart';
 
 addReservationResponse(Request req, String activityId) async {
   try {

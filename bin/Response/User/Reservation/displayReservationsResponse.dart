@@ -1,8 +1,8 @@
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:shelf/shelf.dart';
 
-import '../../RespnseMsg/ResponseMsg.dart';
-import '../../Services/Supabase/supabaseEnv.dart';
+import '../../../RespnseMsg/ResponseMsg.dart';
+import '../../../Services/Supabase/supabaseEnv.dart';
 
 displayReservationsResponse(Request req) async {
   try {
@@ -34,7 +34,7 @@ displayReservationsResponse(Request req) async {
 
     return ResponseMsg().successResponse(
       msg: "success",
-      data: {"Your activities:": activitiesList},
+      data: {"Your activities reservations :": activitiesList},
     );
   } catch (error) {
     return ResponseMsg().errorResponse(msg: error.toString());
