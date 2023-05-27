@@ -6,13 +6,12 @@ import 'package:shelf/shelf.dart';
 import '../../RespnseMsg/ResponseMsg.dart';
 import '../../Services/Supabase/supabaseEnv.dart';
 
-addActivityResponse(Request req) async {
+editActivityResponse(Request req, String activityId) async {
   try {
     final Map body = jsonDecode(await req.readAsString());
     final jwt = JWT.decode(req.headers["authorization"]!);
 
     final supabase = SupabaseEnv().supabase;
-    final supabaseFromActivities = supabase.from("activities");
 
     final userId = (await supabase
         .from("users")
@@ -24,38 +23,32 @@ addActivityResponse(Request req) async {
         .select("id")
         .eq("user_id", userId))[0]["id"];
 
-    // insert new activity
-    await supabaseFromActivities.insert({
+    // Update activity info in "activities" table
+    await supabase.from("activities").update({
       "activity_name": body["activity_name"],
       "activity_price": body["activity_price"],
       "activity_location": body["activity_location"],
       "activity_description": body["activity_description"],
       "activity_pic": body["activity_pic"],
       "owner_id": ownerId,
-    });
+    }).eq("id", int.parse(activityId));
 
-    final activityId = (await supabaseFromActivities
-        .select("id")
-        .eq("owner_id", ownerId)
-        .order("id", ascending: false)
-        .limit(1))[0]["id"];
-
-    // Insert activity duration to "activity_duration" table
-    await supabase.from("activity_duration").insert({
+    // Update activity duration in "activity_duration" table
+    await supabase.from("activity_duration").update({
       "activity_start_time": body["activity_start_time"],
       "activity_end_time": body["activity_end_time"],
       "activity_date": body["activity_date"],
       "activity_id": activityId,
-    });
+    }).eq("activity_id", int.parse(activityId));
 
-    // Insert activity pictures to "activity_pictures" table
-    await supabase.from("activity_pictures").insert({
+    // Update activity pictures in "activity_pictures" table
+    await supabase.from("activity_pictures").update({
       "picture_url": body["picture_url"],
       "activity_id": activityId,
-    });
+    }).eq("activity_id", int.parse(activityId));
 
     return ResponseMsg().successResponse(
-      msg: "add Activity success",
+      msg: "Update Activity success",
     );
   } catch (error) {
     return ResponseMsg().errorResponse(msg: error.toString());

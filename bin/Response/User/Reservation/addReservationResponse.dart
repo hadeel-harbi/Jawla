@@ -26,25 +26,6 @@ addReservationResponse(Request req, String activityId) async {
       "reservation_time": dateNow.toString(),
     });
 
-    //---------
-
-    final ownerId = (await supabase
-        .from("activities")
-        .select("owner_id")
-        .eq("id", int.parse(activityId)))[0]["owner_id"];
-
-    final reserId = (await fromReservations.select("id").eq(
-          "activity_id",
-          int.parse(activityId),
-        ))[0]["id"];
-
-    //insert in (activity_reservations) table *****
-    await supabase.from("activity_reservations").insert({
-      "owner_id": ownerId,
-      "reservation_id": reserId,
-      "activity_id": int.parse(activityId),
-    });
-
     return ResponseMsg().successResponse(
       msg: "Your reservation has been complated successfully",
     );
