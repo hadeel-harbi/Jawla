@@ -30,7 +30,6 @@ addActivityResponse(Request req) async {
       "activity_price": body["activity_price"],
       "activity_location": body["activity_location"],
       "activity_description": body["activity_description"],
-      "activity_pic": body["activity_pic"],
       "owner_id": ownerId,
     });
 
@@ -56,6 +55,7 @@ addActivityResponse(Request req) async {
 
     return ResponseMsg().successResponse(
       msg: "add Activity success",
+      data: {"activity Id : ": activityId},
     );
   } catch (error) {
     return ResponseMsg().errorResponse(msg: error.toString());
