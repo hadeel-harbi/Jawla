@@ -31,6 +31,6 @@ loginResponse(Request req) async {
       },
     );
   } catch (error) {
-    return ResponseMsg().errorResponse(msg: "Error log in");
+    return ResponseMsg().errorResponse(msg: "Error log in, $error");
   }
 }

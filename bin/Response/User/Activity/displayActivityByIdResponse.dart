@@ -16,12 +16,7 @@ displayActivityByIdResponse(Request _, String id) async {
         .select("activity_date , activity_start_time , activity_end_time")
         .eq("activity_id", int.parse(id)))[0];
 
-    final activitypictures = (await supabase
-        .from("activity_pictures")
-        .select("picture_url")
-        .eq("activity_id", int.parse(id)))[0];
-
-    final activityDetail = [activity, activityDuration, activitypictures];
+    final activityDetail = [activity, activityDuration];
 
     return ResponseMsg().successResponse(
       msg: "success",

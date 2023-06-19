@@ -27,7 +27,7 @@ upgradeToOwnerResponse(Request req) async {
     });
 
     // change (isOwner) to True
-    await fromUsers.update({"isOwner": true}).eq("id", userId);
+    await fromUsers.update({"is_owner": true}).eq("id", userId);
 
     return ResponseMsg().successResponse(
       msg: "add owner success",

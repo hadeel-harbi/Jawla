@@ -15,6 +15,7 @@ editProfileResponse(Request req) async {
 
     if (body.keys.contains("name")) {
       await supabase.update(body).eq("id_auth", jwt.payload["sub"]);
+      print("updated");
     }
 
     return ResponseMsg().successResponse(

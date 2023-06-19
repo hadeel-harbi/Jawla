@@ -27,7 +27,7 @@ editActivityResponse(Request req, String activityId) async {
     await supabase.from("activities").update({
       "activity_name": body["activity_name"],
       "activity_price": body["activity_price"],
-      "activity_location": body["activity_location"],
+      "activity_city": body["activity_city"],
       "activity_description": body["activity_description"],
       "activity_pic": body["activity_pic"],
       "owner_id": ownerId,

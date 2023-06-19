@@ -16,7 +16,7 @@ addFavoriteActivityResponse(Request req, String activityId) async {
     // insert new favorite in (favorites) table
     await supabase
         .from("favorite")
-        .insert({"user_id": userId, "activity_id": int.parse(activityId)});
+        .upsert({"user_id": userId, "activity_id": int.parse(activityId)});
 
     return ResponseMsg().successResponse(
       msg: "Your favorite activity has been added",

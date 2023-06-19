@@ -12,12 +12,12 @@ displayProfileResponse(Request req) async {
 
     final profile = (await supabase
         .from("users")
-        .select("name , email , phone , location , profile_pic")
+        .select("name , email , phone , city , profile_pic, is_owner")
         .eq("id_auth", jwt.payload["sub"]))[0];
 
     return ResponseMsg().successResponse(
       msg: "success",
-      data: {"profile": profile},
+      data: {"data": profile},
     );
   } catch (error) {
     return ResponseMsg().errorResponse(msg: error.toString());

@@ -3,16 +3,18 @@ class UserModel {
   final String email;
   final String phone;
   final String idAuth;
-  final String? location;
+  final String? city;
   final String? profilePic;
+  final String? isOwner;
 
   UserModel({
     required this.name,
     required this.email,
     required this.phone,
     required this.idAuth,
-    this.location,
+    this.city,
     this.profilePic,
+    this.isOwner,
   });
 
   factory UserModel.fromJson({required Map json}) {
@@ -21,8 +23,9 @@ class UserModel {
       email: json['email'],
       phone: json['phone'],
       idAuth: json['id_auth'],
-      location: json['location'],
+      city: json['city'],
       profilePic: json['profilePic'],
+      isOwner: json['is_owner'],
     );
   }
 
@@ -32,8 +35,9 @@ class UserModel {
       "email": email,
       "phone": phone,
       "id_auth": idAuth,
-      "location": location,
+      "city": city,
       "profile_pic": profilePic,
+      "is_owner": isOwner,
     };
   }
 }
