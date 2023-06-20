@@ -13,8 +13,8 @@ Middleware checkOwnerMiddleware() => (innerhandler) => (Request req) async {
             .eq("id_auth", jwt.payload["sub"]))[0]["id"];
 
         bool owner =
-            (await supabase.select("isOwner").eq("id", userId))[0]["isOwner"];
-
+            (await supabase.select("is_owner").eq("id", userId))[0]["is_owner"];
+        print(owner);
         if (!owner) {
           return ResponseMsg().errorResponse(msg: "You have to be owner!");
         }

@@ -22,12 +22,15 @@ displayAllOwnerActivitiesResponse(Request req) async {
         .eq("user_id", userId))[0]["id"];
 
     // display all activities created by owner
-    final activitiesOwner =
-        await supabase.from("activities").select().eq("owner_id", ownerId);
+    final activitiesOwner = await supabase
+        .from("activities")
+        .select(
+            "id, activity_name, activity_price, activity_city, activity_description, activity_pic, activity_duration(activity_date,activity_start_time,activity_end_time)")
+        .eq("owner_id", ownerId);
 
     return ResponseMsg().successResponse(
       msg: "success",
-      data: {"Your activities:": activitiesOwner},
+      data: {"data": activitiesOwner},
     );
   } catch (error) {
     return ResponseMsg().errorResponse(msg: "$error");

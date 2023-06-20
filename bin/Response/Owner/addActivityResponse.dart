@@ -47,12 +47,6 @@ addActivityResponse(Request req) async {
       "activity_id": activityId,
     });
 
-    // Insert activity pictures to "activity_pictures" table
-    await supabase.from("activity_pictures").insert({
-      "picture_url": body["picture_url"],
-      "activity_id": activityId,
-    });
-
     return ResponseMsg().successResponse(
       msg: "add Activity success",
       data: {"activity Id : ": activityId},

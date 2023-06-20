@@ -22,7 +22,7 @@ createAccountResponse(Request req) async {
     );
 
     // send email for Authentication
-    // await supabase.auth.signInWithOtp(email: body["email"]);
+    await supabase.auth.signInWithOtp(email: body["email"]);
 
     // object from user model
     UserModel userObject = UserModel(
@@ -30,6 +30,7 @@ createAccountResponse(Request req) async {
       email: body["email"],
       phone: body["phone"],
       idAuth: userInfo.user!.id,
+      isOwner: false,
     );
 
     // insert in users table
