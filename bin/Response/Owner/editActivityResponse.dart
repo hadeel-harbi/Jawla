@@ -41,12 +41,6 @@ editActivityResponse(Request req, String activityId) async {
       "activity_id": activityId,
     }).eq("activity_id", int.parse(activityId));
 
-    // Update activity pictures in "activity_pictures" table
-    await supabase.from("activity_pictures").update({
-      "picture_url": body["picture_url"],
-      "activity_id": activityId,
-    }).eq("activity_id", int.parse(activityId));
-
     return ResponseMsg().successResponse(
       msg: "Update Activity success",
     );

@@ -7,26 +7,13 @@ searchActivitResponse(Request _, String text) async {
   try {
     final supabase = SupabaseEnv().supabase;
 
-    final List results = [];
-
-    final activities = await supabase
+    final results = await supabase
         .from('activities')
-        .select()
+        .select(
+          'id, activity_name, activity_price, activity_city, activity_description, activity_pic, activity_duration(activity_date,activity_start_time,activity_end_time)',
+        )
         .textSearch('activity_name', "$text:*");
-    print(activities); // List<dynamic>
-    print("------");
-    print(activities[0]["id"]);
-    for (var element in activities) {
-      // print(element); // Map<String, dynamic>
 
-      final duration = await supabase
-          .from('activity_duration')
-          .select('activity_date,activity_start_time,activity_end_time')
-          .eq("activity_id", activities[0]["id"]);
-      print(duration);
-      print("++++");
-      results.add([element, duration]);
-    }
     print(results);
 
     return ResponseMsg().successResponse(

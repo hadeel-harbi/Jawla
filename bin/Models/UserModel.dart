@@ -5,7 +5,7 @@ class UserModel {
   final String idAuth;
   final String? city;
   final String? profilePic;
-  final String? isOwner;
+  final bool? isOwner;
 
   UserModel({
     required this.name,
@@ -25,7 +25,7 @@ class UserModel {
       idAuth: json['id_auth'],
       city: json['city'],
       profilePic: json['profilePic'],
-      isOwner: json['is_owner'],
+      isOwner: false,
     );
   }
 
