@@ -19,8 +19,20 @@ displayFavoriteActivitiesResponse(Request req) async {
         .select("activity_id")
         .eq("user_id", userId);
 
+    final activitiesList = [];
+
+    for (var element in activityId) {
+      final activity = (await supabase
+          .from("activities")
+          .select(
+              "id, activity_name, activity_price, activity_city, activity_description, activity_pic, activity_duration(activity_date,activity_start_time,activity_end_time)")
+          .eq("id", element["activity_id"]))[0];
+
+      activitiesList.add(activity);
+    }
+
     return ResponseMsg().successResponse(msg: "success", data: {
-      "Your favorite : ": activityId,
+      "data": activitiesList,
     });
   } catch (error) {
     return ResponseMsg().errorResponse(msg: error.toString());

@@ -8,7 +8,7 @@ displayAllActivitiesResponse(Request _) async {
     final supabase = SupabaseEnv().supabase;
 
     final activities = await supabase.from("activities").select(
-          "id, activity_name, activity_price, activity_city, activity_description, activity_pic, activity_duration(activity_date,activity_start_time,activity_end_time)",
+          "id, activity_name, activity_price, activity_city, activity_description, activity_pic,person_number, activity_duration(activity_date,activity_start_time,activity_end_time)",
         );
 
     return ResponseMsg().successResponse(

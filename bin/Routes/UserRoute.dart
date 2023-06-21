@@ -10,6 +10,7 @@ import '../Response/User/Favorite/deleteFavoriteActivityResponse.dart';
 import '../Response/User/Favorite/displayFavoriteActivitiesResponse.dart';
 import '../Response/User/Profile/displayProfileResponse.dart';
 import '../Response/User/Profile/editProfileResponse.dart';
+import '../Response/User/Reservation/displayReservationsByDateResponse.dart';
 import '../Response/User/upgradeToOwnerResponse.dart';
 import '../Response/User/Reservation/addReservationResponse.dart';
 import '../Response/User/Reservation/deleteReservationResponse.dart';
@@ -22,6 +23,10 @@ class UserRoute {
       ..get('/display_activity_byid/<activity_id>', displayActivityByIdResponse)
       ..get('/add_reservation/<activity_id>', addReservationResponse)
       ..get('/display_reservations', displayReservationsResponse)
+      ..get(
+        '/display_reservations_by_date/<date>',
+        displayReservationsByDateResponse,
+      )
       ..delete('/delete_reservation/<reser_id>', deleteReservationResponse)
       ..post('/upgrade_to_owner', upgradeToOwnerResponse)
       ..get('/display_profile', displayProfileResponse)
