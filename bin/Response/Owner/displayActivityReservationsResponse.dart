@@ -12,8 +12,6 @@ displayActivityReservationsResponse(Request _, String activityId) async {
         .from("reservations")
         .select()
         .eq("activity_id", int.parse(activityId));
-    print(reservations);
-    print(reservations.length);
 
     return ResponseMsg().successResponse(
       msg: "success",
